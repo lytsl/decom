@@ -25,10 +25,12 @@ def product_detail(request, category_slug, product_slug):
     try:
         category = Category.objects.get(slug=category_slug)
         product = Product.objects.get(category=category, slug=product_slug)
+        images = product.images.all()
     except Exception as e:
         raise e
     context = {
         'product': product,
         'category': category,
+        'images': images,
     }
     return render(request, 'store/product_detail.html', context)
