@@ -11,8 +11,8 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImageAdmin]
 
     prepopulated_fields = {'slug': ('product_name',)}
-    list_display = ('product_name', 'price', 'stock', 'category', 'modified_date', 'is_available')
-    ordering = ('-modified_date',)
+    list_display = ('product_name', 'price', 'stock', 'category', 'is_available')
+    ordering = ('category',)
 
     class Meta:
         model = Product

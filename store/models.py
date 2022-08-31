@@ -11,14 +11,12 @@ class Product(models.Model):
     stock = models.IntegerField()
     is_available = models.BooleanField(default=True)
     category = models.ForeignKey('category.Category', on_delete=models.CASCADE)
-    created_date = models.DateTimeField(auto_now_add=True)
-    modified_date = models.DateTimeField(auto_now=True)
 
     def get_url(self):
         return reverse('product_detail', args=[self.category.slug, self.slug])
 
     def images_with_index(self):
-        return enumerate(self.images.all(),start=1)
+        return enumerate(self.images.all(), start=1)
 
     def __str__(self):
         return self.product_name
