@@ -4,67 +4,73 @@
 
 {% block content %}
 
-<div class="cart-table-area section-padding-100">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 col-lg-8">
-                        <div class="cart-title mt-50">
-                            <h2>Shopping Cart</h2>
-                        </div>
-
-                        <div class="cart-table clearfix">
-                            <table class="table table-responsive">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Name</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                {% for item in cart_items %}
-                                    <tr>
-                                        <td class="cart_product_img">
-                                            <a href="#"><img src="{{ item.product.images.first.image.url }}" alt="Product"></a>
-                                        </td>
-                                        <td class="cart_product_desc">
-                                            <h5>{{ item.product.product_name }}</h5>
-                                        </td>
-                                        <td class="price">
-                                            <span>{{ item.sub_total }}</span>
-                                        </td>
-                                        <td class="qty">
-                                            <div class="qty-btn d-flex">
-                                                <p>Qty</p>
-                                                <div class="quantity">
-                                                    <span class="qty-minus" onclick="location.href='{% url 'remove_cart' item.product.id %}'"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="{{ item.product.stock }}" name="quantity" value="{{ item.quantity }}">
-                                                    <span class="qty-plus" onclick="location.href='{% url 'add_cart' item.product.id %}'"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+    <div class="cart-table-area section-padding-100">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <div class="cart-title mt-50">
+                        <h2>Shopping Cart</h2>
                     </div>
-                    <div class="col-12 col-lg-4">
-                        <div class="cart-summary">
-                            <h5>Cart Total</h5>
-                            <ul class="summary-table">
-                                <li><span>subtotal:</span> <span>{{ total }}</span></li>
-                                <li><span>delivery:</span> <span>Free</span></li>
-                                <li><span>total:</span> <span>{{ total }}</span></li>
-                            </ul>
-                            <div class="cart-btn mt-100">
-                                <button onclick="location.href='#'" class="btn amado-btn w-100">Checkout</button>
-                            </div>
+
+                    <div class="cart-table clearfix">
+                        <table class="table table-responsive">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in cart_items %}
+                                <tr>
+                                    <td class="cart_product_img">
+                                        <a href="#"><img src="{{ item.product.images.first.image.url }}" alt="Product"></a>
+                                    </td>
+                                    <td class="cart_product_desc">
+                                        <h5>{{ item.product.product_name }}</h5>
+                                    </td>
+                                    <td class="price">
+                                        <span>{{ item.sub_total }}</span>
+                                    </td>
+                                    <td class="qty">
+                                        <div class="qty-btn d-flex">
+                                            <p>Qty</p>
+                                            <div class="quantity">
+                                                <span class="qty-minus"
+                                                      onclick="location.href='{% url 'remove_cart' item.product.id %}'">
+                                                    <i class="fa fa-minus" aria-hidden="true"></i></span>
+                                                <input type="number" class="qty-text" id="qty" step="1" min="1"
+                                                       max="{{ item.product.stock }}" name="quantity"
+                                                       value="{{ item.quantity }}">
+                                                <span class="qty-plus"
+                                                      onclick="location.href='{% url 'add_cart' item.product.id %}'">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <div class="cart-summary">
+                        <h5>Cart Total</h5>
+                        <ul class="summary-table">
+                            <li><span>subtotal:</span> <span>{{ total }}</span></li>
+                            <li><span>delivery:</span> <span>Free</span></li>
+                            <li><span>total:</span> <span>{{ total }}</span></li>
+                        </ul>
+                        <div class="cart-btn mt-100">
+                            <button onclick="location.href='#'" class="btn amado-btn w-100">Checkout</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
 {% endblock %}

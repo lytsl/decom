@@ -3,10 +3,10 @@
 
 {% block content %}
 
-<!-- Product Catagories Area Start -->
-<div class="products-catagories-area clearfix">
-            <div class="amado-pro-catagory clearfix">
-                {% for category in categories %}
+    <!-- Product Catagories Area Start -->
+    <div class="products-catagories-area clearfix">
+        <div class="amado-pro-catagory clearfix">
+            {% for category in categories %}
                 <!-- Single Catagory -->
                 <div class="single-products-catagory clearfix">
                     <a href="{{ category.get_url }}">
@@ -19,10 +19,10 @@
                         </div>
                     </a>
                 </div>
-                {% endfor %}
-            </div>
+            {% endfor %}
         </div>
-<!-- Product Catagories Area End -->
+    </div>
+    <!-- Product Catagories Area End -->
 
 {% endblock %}
 
