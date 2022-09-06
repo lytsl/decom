@@ -6,6 +6,14 @@
 
     <div class="cart-table-area section-padding-100">
         <div class="container-fluid">
+            {% if not cart_items %}
+                <h2 class="text-center">Your Shopping Cart Is Empty</h2>
+                <br>
+                <div class="text-center">
+                    <button class="btn amado-btn" onclick="location.href='{% url 'shop' %}'" class="btn btn-primary">Continue Shopping</button>
+                </div>
+
+            {% else %}
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <div class="cart-title mt-50">
@@ -26,10 +34,10 @@
                             {% for item in cart_items %}
                                 <tr>
                                     <td class="cart_product_img">
-                                        <a href="#"><img src="{{ item.product.images.first.image.url }}" alt="Product"></a>
+                                        <a href="{{ item.product.get_url }}"><img src="{{ item.product.images.first.image.url }}" alt="Product"></a>
                                     </td>
                                     <td class="cart_product_desc">
-                                        <h5>{{ item.product.product_name }}</h5>
+                                        <a href="{{ item.product.get_url }}"><h5>{{ item.product.product_name }}</h5></a>
                                     </td>
                                     <td class="price">
                                         <span>{{ item.sub_total }}</span>
@@ -70,6 +78,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 

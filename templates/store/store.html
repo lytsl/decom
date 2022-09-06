@@ -46,12 +46,13 @@
     <div class="amado_product_area section-padding-0-100">
         <div class="container-fluid">
 
+        {% if products %}
             <div class="row">
                 <div class="col-12">
                     <div class="product-topbar d-xl-flex align-items-end justify-content-between">
                         <!-- Total Products -->
                         <div class="total-products">
-                            <p>Showing 1-10 0f {{ products_count }}</p>
+                            <p>found {{ products_count }} items</p>
                             <div class="view d-flex">
                                 <a href="#"><i class="fa fa-th-large" aria-hidden="true"></i></a>
                                 <a href="#"><i class="fa fa-bars" aria-hidden="true"></i></a>
@@ -86,7 +87,6 @@
             </div>
 
             <div class="row">
-
                 <!-- Single Product Area -->
                 {% for product in products %}
                     <div class="col-12 col-sm-6 col-md-12 col-xl-6">
@@ -120,31 +120,43 @@
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                     </div>
                                     <div class="cart">
-                                        <a href="cart.html" data-toggle="tooltip" data-placement="left"
-                                           title="Add to Cart"><img src="{% static 'img/core-img/cart.png' %}" alt=""></a>
+                                        <a href="{% url 'add_cart' product.id%}" data-toggle="tooltip" data-placement="left"
+                                           title="Add to Cart"><img src="{% static 'img/core-img/cart.png' %}"
+                                                                    alt=""></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
-
-
             </div>
 
             <div class="row">
                 <div class="col-12">
                     <!-- Pagination -->
-                    <nav aria-label="navigation">
-                        <ul class="pagination justify-content-end mt-50">
-                            <li class="page-item active"><a class="page-link" href="#">01.</a></li>
-                            <li class="page-item"><a class="page-link" href="#">02.</a></li>
-                            <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                            <li class="page-item"><a class="page-link" href="#">04.</a></li>
-                        </ul>
-                    </nav>
+                    {% block pagination %}
+                        <nav aria-label="navigation">
+                            <ul class="pagination justify-content-end mt-50">
+                                {% for page_number in products.adjusted_elided_pages %}
+                                    {% if page_number == products.paginator.ELLIPSIS %}
+                                        <li class="page-item"><a>{{ page_number }}.</a></li>
+                                    {% else %}
+                                        <li class="page-item {% if page_number == products.number %}active{% endif %}">
+                                            <a class="page-link " href="?page={{ page_number }}">{{ page_number }}.</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                    {% endblock %}
                 </div>
             </div>
+
+        {% else %}
+            <div>
+            <h2>No results were found.</h2>
+            </div>
+        {% endif %}
+
         </div>
     </div>
 

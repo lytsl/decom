@@ -32,8 +32,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="search-content">
-                    <form action="#" method="get">
-                        <input type="search" name="search" id="search" placeholder="Type your keyword...">
+                    <form action="{% url 'search' %}" method="get">
+                        <input type="search" name="keyword" id="search" placeholder="Type your keyword...">
                         <button type="submit"><img src="{% static 'img/core-img/search.png' %}" alt=""></button>
                     </form>
                 </div>
@@ -85,8 +85,8 @@
         </div>
         <!-- Cart Menu -->
         <div class="cart-fav-search mb-100">
-            <a href="cart.html" class="cart-nav"><img src="{% static 'img/core-img/cart.png' %}" alt=""> Cart
-                <span>(0)</span></a>
+            <a href="{% url 'cart' %}" class="cart-nav"><img src="{% static 'img/core-img/cart.png' %}" alt=""> Cart
+                <span>({{ cart_count }})</span></a>
             <a href="#" class="fav-nav"><img src="{% static 'img/core-img/favorites.png' %}" alt=""> Favourite</a>
             <a href="#" class="search-nav"><img src="{% static 'img/core-img/search.png' %}" alt=""> Search</a>
         </div>
