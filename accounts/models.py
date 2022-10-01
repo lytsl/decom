@@ -1,31 +1,36 @@
+import sys
+
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.core.exceptions import ValidationError
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, User
+from random import choice
+from string import ascii_lowercase, digits
 
 
 class MyAccountManager(BaseUserManager):
-    def create_user(self, first_name, last_name, username, email, password=None):
+    def create_user(self, name, email,username, phone_num=None, password=None):
         if not email:
-            raise ValueError('User must have an email address')
-        if not username:
-            raise ValueError('User must have an username')
+            raise ValidationError('User must have an email address')
+        if not name:
+            raise ValidationError('User must have a name')
 
+        username = generate_random_username(username=username)
         user = self.model(
             email=self.normalize_email(email),
+            name=name,
             username=username,
-            first_name=first_name,
-            last_name=last_name,
+            # phone_num=phone_num
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, first_name, last_name, username, email, password=None):
+    def create_superuser(self, name, username, email, password=None):
         user = self.create_user(
             email=self.normalize_email(email),
             username=username,
-            first_name=first_name,
-            last_name=last_name,
+            name=name,
             password=password,
         )
 
@@ -39,11 +44,10 @@ class MyAccountManager(BaseUserManager):
 
 
 class Account(AbstractBaseUser):
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
-    username = models.CharField(max_length=40)
+    name = models.CharField(max_length=50)
+    username = models.CharField(max_length=50, unique=True)
     email = models.CharField(max_length=254, unique=True)
-    phone_num = models.CharField(max_length=15, unique=True)
+    phone_num = models.CharField(max_length=15)
 
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)
@@ -65,3 +69,13 @@ class Account(AbstractBaseUser):
 
     def has_module_perms(self, add_label):
         return True
+
+
+def generate_random_username(username, length=0, chars=ascii_lowercase + digits, split=4, delimiter='-'):
+    generated_username = username + ''.join([choice(chars) for _ in range(length)])
+    # if split:
+    #     username = delimiter.join([username[start:start + split] for start in range(0, len(username), split)])
+    if Account.objects.filter(username=generated_username).exists():
+        return generate_random_username(username=username, length=length+1, chars=chars)
+    return generated_username
+

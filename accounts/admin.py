@@ -5,7 +5,7 @@ from .models import Account
 
 
 class AccountAdmin(UserAdmin):
-    list_display = ('email', 'username', 'first_name', 'last_name', 'last_login', 'date_joined', 'is_active')
+    list_display = ('email', 'username', 'name', 'is_active')
     list_display_links = ('email', 'username')
     readonly_fields = ('last_login', 'date_joined')
     ordering = ('-date_joined',)
